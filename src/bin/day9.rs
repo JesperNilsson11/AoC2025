@@ -1,17 +1,28 @@
-use std::{fs, path::Path};
+use std::{fs, i64, path::Path};
 
 fn part1(file: String) -> i64 {
     let input = fs::read_to_string(file).unwrap();
     let mut res = 0;
+
+    let mut grid: Vec<(i64, i64)> = input.lines().map(|l| {
+        let mut itr = l.split(',');
+        (itr.next().unwrap().parse().unwrap(), itr.next().unwrap().parse().unwrap())
+    }).collect();
+
+    for &(x1, y1) in &grid {
+        for &(x2, y2) in &grid {
+            let a = (1+(x1-x2).abs()) * (1+(y1-y2).abs());
+            if res < a {
+                res = a;
+            }
+        }
+    }
 
     return res;
 }
 
 fn is_valid(xmin: i64, xmax: i64, ymin: i64, ymax: i64, lines: &Vec<(i64, i64, i64, i64)>) -> bool {
     for l in lines {
-        if l.1 == 9 && l.3 == 5 {
-            println!("point");
-        }
         if l.0 >= xmax || l.1 <= xmin || l.3 <= ymin || l.2 >= ymax {
             continue;
         }
