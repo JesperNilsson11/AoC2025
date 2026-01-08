@@ -17,17 +17,17 @@ fn part1(file: String) -> i64 {
             i += 1;
         }
 
-        res += 10 * (highest - '0' as u8) as i64;
+        res += 10 * (highest - b'0') as i64;
         let mut highest: u8 = 0;
         for b in &bytes[idx + 1..] {
             if *b > highest {
                 highest = *b;
             }
         }
-        res += (highest - '0' as u8) as i64;
+        res += (highest - b'0') as i64;
     }
 
-    return res;
+    res
 }
 
 fn calc(bytes: &[u8], numbers_left: usize) -> (i64, usize) {
@@ -42,7 +42,7 @@ fn calc(bytes: &[u8], numbers_left: usize) -> (i64, usize) {
         i += 1;
     }
 
-    return ((highest - '0' as u8) as i64, idx);
+    ((highest - b'0') as i64, idx)
 }
 
 fn part2(file: String) -> i64 {
@@ -63,12 +63,12 @@ fn part2(file: String) -> i64 {
         res += tmp;
     }
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
         .parse::<i32>()
         .unwrap_or(0);
 
@@ -92,5 +92,8 @@ fn test_part2() {
     let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
         .parse::<i32>()
         .unwrap_or(0);
-    assert_eq!(3121910778619, part2("test".to_string() + &nr.to_string() + ".txt"));
+    assert_eq!(
+        3121910778619,
+        part2("test".to_string() + &nr.to_string() + ".txt")
+    );
 }

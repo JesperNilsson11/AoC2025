@@ -55,9 +55,7 @@ fn part1(file: String, iterations: usize) -> i64 {
 
         if c1 != c2 {
             if c2 < c1 {
-                let tmp = c2;
-                c2 = c1;
-                c1 = tmp;
+                std::mem::swap(&mut c2, &mut c1);
             }
 
             let old = circuits.remove(c2);
@@ -75,7 +73,7 @@ fn part1(file: String, iterations: usize) -> i64 {
     res *= lens.pop().unwrap() as i64;
     res *= lens.pop().unwrap() as i64;
 
-    return res;
+    res
 }
 
 fn part2(file: String) -> i64 {
@@ -136,9 +134,7 @@ fn part2(file: String) -> i64 {
 
         if c1 != c2 {
             if c2 < c1 {
-                let tmp = c2;
-                c2 = c1;
-                c1 = tmp;
+                std::mem::swap(&mut c2, &mut c1);
             }
 
             if circuits.len() == 2 {
@@ -150,12 +146,12 @@ fn part2(file: String) -> i64 {
         }
     }
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
         .parse::<i32>()
         .unwrap_or(0);
 

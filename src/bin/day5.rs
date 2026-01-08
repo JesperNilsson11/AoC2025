@@ -5,10 +5,18 @@ fn part1(file: String) -> i64 {
     let mut res = 0;
 
     let mut iter = input.split("\n\n");
-    let ranges: Vec<Vec<i64>> = iter.next().unwrap().lines().map(|l| {
-        l.split("-").map(|n| n.parse().unwrap()).collect()}
-    ).collect();
-    let ids: Vec<i64> = iter.next().unwrap().lines().map(|n| n.parse().unwrap()).collect();
+    let ranges: Vec<Vec<i64>> = iter
+        .next()
+        .unwrap()
+        .lines()
+        .map(|l| l.split("-").map(|n| n.parse().unwrap()).collect())
+        .collect();
+    let ids: Vec<i64> = iter
+        .next()
+        .unwrap()
+        .lines()
+        .map(|n| n.parse().unwrap())
+        .collect();
 
     for i in ids {
         let mut found = false;
@@ -25,7 +33,7 @@ fn part1(file: String) -> i64 {
         }
     }
 
-    return res;
+    res
 }
 
 fn part2(file: String) -> i64 {
@@ -33,9 +41,12 @@ fn part2(file: String) -> i64 {
     let mut res = 0;
 
     let mut iter = input.split("\n\n");
-    let mut ranges: Vec<Vec<i64>> = iter.next().unwrap().lines().map(|l| {
-        l.split("-").map(|n| n.parse().unwrap()).collect()}
-    ).collect();
+    let mut ranges: Vec<Vec<i64>> = iter
+        .next()
+        .unwrap()
+        .lines()
+        .map(|l| l.split("-").map(|n| n.parse().unwrap()).collect())
+        .collect();
 
     ranges.sort();
     let mut new_range = Vec::new();
@@ -56,15 +67,17 @@ fn part2(file: String) -> i64 {
     }
 
     for r in new_range {
-        res +=  r[1] - r[0] + 1;
+        res += r[1] - r[0] + 1;
     }
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
+        .parse::<i32>()
+        .unwrap_or(0);
 
     println!("Day {}!", nr);
     println!("{}", part1("input".to_string() + &nr.to_string() + ".txt"));
@@ -74,13 +87,17 @@ fn main() {
 #[test]
 fn test_part1() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
+    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+        .parse::<i32>()
+        .unwrap_or(0);
     assert_eq!(3, part1("test".to_string() + &nr.to_string() + ".txt"));
 }
 
 #[test]
 fn test_part2() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
+    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+        .parse::<i32>()
+        .unwrap_or(0);
     assert_eq!(14, part2("test".to_string() + &nr.to_string() + ".txt"));
 }

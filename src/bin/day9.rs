@@ -4,21 +4,27 @@ fn part1(file: String) -> i64 {
     let input = fs::read_to_string(file).unwrap();
     let mut res = 0;
 
-    let mut grid: Vec<(i64, i64)> = input.lines().map(|l| {
-        let mut itr = l.split(',');
-        (itr.next().unwrap().parse().unwrap(), itr.next().unwrap().parse().unwrap())
-    }).collect();
+    let grid: Vec<(i64, i64)> = input
+        .lines()
+        .map(|l| {
+            let mut itr = l.split(',');
+            (
+                itr.next().unwrap().parse().unwrap(),
+                itr.next().unwrap().parse().unwrap(),
+            )
+        })
+        .collect();
 
     for &(x1, y1) in &grid {
         for &(x2, y2) in &grid {
-            let a = (1+(x1-x2).abs()) * (1+(y1-y2).abs());
+            let a = (1 + (x1 - x2).abs()) * (1 + (y1 - y2).abs());
             if res < a {
                 res = a;
             }
         }
     }
 
-    return res;
+    res
 }
 
 fn is_valid(xmin: i64, xmax: i64, ymin: i64, ymax: i64, lines: &Vec<(i64, i64, i64, i64)>) -> bool {
@@ -28,14 +34,14 @@ fn is_valid(xmin: i64, xmax: i64, ymin: i64, ymax: i64, lines: &Vec<(i64, i64, i
         }
         return false;
     }
-    return true;
+    true
 }
 
 fn part2(file: String) -> i64 {
     let input = fs::read_to_string(file).unwrap();
     let mut res = 0;
 
-    let mut points: Vec<(i64, i64)> = input
+    let points: Vec<(i64, i64)> = input
         .lines()
         .map(|l| {
             let mut itr = l.split(",");
@@ -82,7 +88,7 @@ fn part2(file: String) -> i64 {
             };
 
             if is_valid(xmin, xmax, ymin, ymax, &lines) {
-                let area = (xmax-xmin+1) * (ymax-ymin+1);
+                let area = (xmax - xmin + 1) * (ymax - ymin + 1);
                 if area > res {
                     res = area;
                 }
@@ -90,12 +96,12 @@ fn part2(file: String) -> i64 {
         }
     }
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
         .parse::<i32>()
         .unwrap_or(0);
 

@@ -20,7 +20,7 @@ fn part1(file: String) -> i64 {
         }
     }
 
-    return res;
+    res
 }
 
 fn part2(file: String) -> i64 {
@@ -43,7 +43,7 @@ fn part2(file: String) -> i64 {
                     let mut matched = true;
                     let pattern = &strnum[0..i];
                     for j in 0..(strnum.len() / i) {
-                        if pattern != &strnum[j*i..(j+1)*i] {
+                        if pattern != &strnum[j * i..(j + 1) * i] {
                             matched = false;
                             break;
                         }
@@ -57,12 +57,14 @@ fn part2(file: String) -> i64 {
         }
     }
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
+        .parse::<i32>()
+        .unwrap_or(0);
 
     println!("Day {}!", nr);
     println!("{}", part1("input".to_string() + &nr.to_string() + ".txt"));
@@ -72,13 +74,23 @@ fn main() {
 #[test]
 fn test_part1() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
-    assert_eq!(1227775554, part1("test".to_string() + &nr.to_string() + ".txt"));
+    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+        .parse::<i32>()
+        .unwrap_or(0);
+    assert_eq!(
+        1227775554,
+        part1("test".to_string() + &nr.to_string() + ".txt")
+    );
 }
 
 #[test]
 fn test_part2() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]).parse::<i32>().unwrap_or(0);
-    assert_eq!(4174379265, part2("test".to_string() + &nr.to_string() + ".txt"));
+    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+        .parse::<i32>()
+        .unwrap_or(0);
+    assert_eq!(
+        4174379265,
+        part2("test".to_string() + &nr.to_string() + ".txt")
+    );
 }

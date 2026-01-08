@@ -1,4 +1,8 @@
-use std::{collections::{HashMap, HashSet}, fs, path::Path};
+use std::{
+    collections::{HashMap, HashSet},
+    fs,
+    path::Path,
+};
 
 fn part1(file: String) -> i64 {
     let input = fs::read_to_string(file).unwrap();
@@ -19,7 +23,7 @@ fn part1(file: String) -> i64 {
     let mut beams = HashSet::new();
     beams.insert(pos);
 
-    while beams.len() > 0 {
+    while !beams.is_empty() {
         let mut new_beams = HashSet::new();
 
         for b in beams.iter() {
@@ -48,7 +52,7 @@ fn part1(file: String) -> i64 {
         beams = new_beams;
     }
 
-    return res;
+    res
 }
 
 fn dfs(x: i64, yy: i64, map: &Vec<Vec<u8>>, memo: &mut HashMap<(i64, i64), i64>) -> i64 {
@@ -56,7 +60,7 @@ fn dfs(x: i64, yy: i64, map: &Vec<Vec<u8>>, memo: &mut HashMap<(i64, i64), i64>)
 
     let mut y = yy;
     if memo.contains_key(&(x, y)) {
-        return *memo.get(&(x,y)).unwrap();
+        return *memo.get(&(x, y)).unwrap();
     }
 
     y += 1;
@@ -83,11 +87,11 @@ fn dfs(x: i64, yy: i64, map: &Vec<Vec<u8>>, memo: &mut HashMap<(i64, i64), i64>)
     res += dfs(x1, y, map, memo);
     res += dfs(x2, y, map, memo);
 
-    if let Some(_) = memo.insert((x, yy), res) {
+    if memo.insert((x, yy), res).is_some() {
         panic!();
     }
 
-    return res;
+    res
 }
 
 fn part2(file: String) -> i64 {
@@ -109,12 +113,12 @@ fn part2(file: String) -> i64 {
 
     res += dfs(pos.0, pos.1, &map, &mut memo);
 
-    return res;
+    res
 }
 
 fn main() {
     let file = file!();
-    let nr = (&Path::new(file).file_stem().unwrap().to_str().unwrap()[3..])
+    let nr = Path::new(file).file_stem().unwrap().to_str().unwrap()[3..]
         .parse::<i32>()
         .unwrap_or(0);
 
